@@ -8,7 +8,7 @@ import Details from './components/Details'
 import Login from './components/Login'
 import { useState, useEffect } from 'react'
 import './App.css'
-
+{/* asdasdsad*/}
 function App() {
   const [products, setProducts] = useState([]);
 
