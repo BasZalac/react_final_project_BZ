@@ -24,6 +24,33 @@ const WebshopForm = ({ sendDataToApp }) => {
     const stock = stockRef.current.value;
     const notes = notesRef.current.value;
 
+    if (!name || !description || !img_url || !price || !stock) {
+      Swal.fire({
+        icon: "error",
+        title: "Hiányzó adatok",
+        text: "Kérlek tölts ki minden kötelező mezőt!",
+      });
+      return;
+    }
+
+    if (isNaN(price) || price <= 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Hibás ár",
+        text: "Az árnak pozitív számnak kell lennie!",
+      });
+      return;
+    }
+
+    if (isNaN(stock) || stock < 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Hibás készlet",
+        text: "A készletnek 0 vagy annál nagyobb számnak kell lennie!",
+      });
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:3000/products", {
         method: "POST",
@@ -31,12 +58,23 @@ const WebshopForm = ({ sendDataToApp }) => {
           "Content-Type": "application/json",
           authorization: localStorage.getItem("token"),
         },
-        body: JSON.stringify({ name, description, img_url, price, stock, notes }),
+        body: JSON.stringify({
+          name,
+          description,
+          img_url,
+          price,
+          stock,
+          notes,
+        }),
       });
 
       if (response.ok) {
-        const data = await response.json();
-        sendDataToApp(data);
+        sendDataToApp();
+        Swal.fire({
+          icon: "success",
+          title: "Siker",
+          text: "A termék sikeresen hozzáadva!",
+        });
       } else {
         Swal.fire({
           icon: "error",
@@ -56,36 +94,78 @@ const WebshopForm = ({ sendDataToApp }) => {
 
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="name">Név*</label>
-            <input className={styles.input} type="text" id="name" ref={nameRef} />
+            <label className={styles.label} htmlFor="name">
+              Név*
+            </label>
+            <input
+              className={styles.input}
+              type="text"
+              id="name"
+              ref={nameRef}
+            />
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="description">Leírás*</label>
-            <textarea className={styles.textarea} id="description" ref={descriptionRef}></textarea>
+            <label className={styles.label} htmlFor="description">
+              Leírás*
+            </label>
+            <textarea
+              className={styles.textarea}
+              id="description"
+              ref={descriptionRef}
+            ></textarea>
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="img_url">Kép URL*</label>
-            <input className={styles.input} type="url" id="img_url" ref={img_urlRef} />
+            <label className={styles.label} htmlFor="img_url">
+              Kép URL*
+            </label>
+            <input
+              className={styles.input}
+              type="url"
+              id="img_url"
+              ref={img_urlRef}
+            />
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="price">Ár*</label>
-            <input className={styles.input} type="number" id="price" ref={priceRef} />
+            <label className={styles.label} htmlFor="price">
+              Ár*
+            </label>
+            <input
+              className={styles.input}
+              type="number"
+              id="price"
+              ref={priceRef}
+            />
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="stock">Raktáron lévő mennyiség*</label>
-            <input className={styles.input} type="number" id="stock" ref={stockRef} />
+            <label className={styles.label} htmlFor="stock">
+              Raktáron lévő mennyiség*
+            </label>
+            <input
+              className={styles.input}
+              type="number"
+              id="stock"
+              ref={stockRef}
+            />
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="notes">Megjegyzések</label>
-            <textarea className={styles.textarea} id="notes" ref={notesRef}></textarea>
+            <label className={styles.label} htmlFor="notes">
+              Megjegyzések
+            </label>
+            <textarea
+              className={styles.textarea}
+              id="notes"
+              ref={notesRef}
+            ></textarea>
           </div>
 
-          <button className={styles.button} type="submit">Küldés</button>
+          <button className={styles.button} type="submit">
+            Küldés
+          </button>
         </form>
       </div>
     </Card>

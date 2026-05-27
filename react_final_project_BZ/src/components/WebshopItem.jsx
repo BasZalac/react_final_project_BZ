@@ -5,16 +5,18 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/loginContext";
 
 const WebshopItem = ({ product, deleteProduct }) => {
-  const {isLogged} = useAuth()
-  console.log(product.id)
+  const { isLogged } = useAuth();
+  console.log(product.id);
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Biztosan törölni szeretnéd ezt a terméket?");
+    const confirmDelete = window.confirm(
+      "Biztosan törölni szeretnéd ezt a terméket?",
+    );
     if (confirmDelete) {
       const response = await fetch(`http://localhost:3000/products/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "authorization": localStorage.getItem("token"),
+          authorization: localStorage.getItem("token"),
         },
       });
       if (response.ok) {
@@ -37,10 +39,10 @@ const WebshopItem = ({ product, deleteProduct }) => {
     <Card>
       <div className={styles.container}>
         <h3 className={styles.destination}>{product.name}</h3>
-
-        
       </div>
-      {isLogged && <button onClick={() => handleDelete(product.id)}>Törlés</button>}
+      {isLogged && (
+        <button onClick={() => handleDelete(product.id)}>Törlés</button>
+      )}
       <NavLink to={`/details/${product.id}`}>
         <button>Részletek</button>
       </NavLink>
