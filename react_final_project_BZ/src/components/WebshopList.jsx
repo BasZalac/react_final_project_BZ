@@ -1,3 +1,4 @@
+import Header from "./Header";
 import WebshopItem from "./WebshopItem";
 
 const WebshopList = ({ products = [], deleteProduct }) => {
@@ -6,6 +7,7 @@ const WebshopList = ({ products = [], deleteProduct }) => {
   } else {
     return (
       <div className="webshop-list">
+        <Header />
         {products.map((product) => (
           <WebshopItem
             key={product.id}

@@ -4,22 +4,21 @@
     top: 1rem;
 }
 
-/* navbar összes megadott taggel ellátott gyerekeleme */
 .navbar>a {
     padding-left: 1rem;
 }
 
 .link{
-    color:rgb(6, 141, 107);
+    color:rgb(2, 141, 141);
     font-size: 1rem;
 }
 
 .link:hover{
-    color: rgb(0, 73, 55);
+    color: rgb(0, 62, 73);
 }
 
 .active, .active:hover{
-    color:rgb(0, 73, 55);
+    color:rgb(0, 62, 73);
     font-weight: 600;  
     font-size: 1.5rem;  
 }

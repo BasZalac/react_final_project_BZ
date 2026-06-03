@@ -8,10 +8,13 @@ const WebshopItem = ({ product, deleteProduct }) => {
   const { isLogged } = useAuth();
   console.log(product.id);
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Biztosan törölni szeretnéd ezt a terméket?",
-    );
-    if (confirmDelete) {
+    const confirmDelete = await Swal.fire({
+      title: "Biztosan törölni szeretnéd a terméket?",
+      text: "Ez a művelet nem visszavonható!",
+      icon: "warning",
+      showCancelButton: true,
+    });
+    if (confirmDelete.isConfirmed) {
       const response = await fetch(`http://localhost:3000/products/${id}`, {
         method: "DELETE",
         headers: {
@@ -36,6 +39,7 @@ const WebshopItem = ({ product, deleteProduct }) => {
     }
   };
   return (
+
     <Card>
       <div className={styles.container}>
         <h3 className={styles.destination}>{product.name}</h3>

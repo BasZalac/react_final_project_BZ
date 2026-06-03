@@ -9,7 +9,6 @@ const WebshopForm = ({ sendDataToApp }) => {
   const img_urlRef = useRef();
   const priceRef = useRef();
   const stockRef = useRef();
-  const notesRef = useRef();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -22,7 +21,6 @@ const WebshopForm = ({ sendDataToApp }) => {
     const img_url = img_urlRef.current.value;
     const price = priceRef.current.value;
     const stock = stockRef.current.value;
-    const notes = notesRef.current.value;
 
     if (!name || !description || !img_url || !price || !stock) {
       Swal.fire({
@@ -64,7 +62,6 @@ const WebshopForm = ({ sendDataToApp }) => {
           img_url,
           price,
           stock,
-          notes,
         }),
       });
 
@@ -110,7 +107,7 @@ const WebshopForm = ({ sendDataToApp }) => {
               Leírás*
             </label>
             <textarea
-              className={styles.textarea}
+              className={styles.input}
               id="description"
               ref={descriptionRef}
             ></textarea>
@@ -152,16 +149,7 @@ const WebshopForm = ({ sendDataToApp }) => {
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="notes">
-              Megjegyzések
-            </label>
-            <textarea
-              className={styles.textarea}
-              id="notes"
-              ref={notesRef}
-            ></textarea>
-          </div>
+          
 
           <button className={styles.button} type="submit">
             Küldés
